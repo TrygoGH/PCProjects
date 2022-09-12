@@ -2,9 +2,11 @@
 //Baseplate stuff
 //init var area
 int xScreenWidth = 1280; int yScreenWidth = 720;
-int xCenter = xScreenWidth / 2; int yCenter = yScreenWidth / 2; int allignL = 0; int allignR = 1280; int allignT = 0; int allignB = 720;
-int i = 0; int i2 = 0; float holder = 0;
+int xCenter = 640; int yCenter = 320; int allignL = 0; int allignR = 1280; int allignT = 0; int allignB = 720;
+int i = 0; int i2 = 0; 
 int GMtick = 0;
+
+String Sen1 = "Automate"; String Sen2 = "everything"; String Sen3 = "when"; String Sen4 = "possible"; String SenComb = "";
 
 void settings() {
   size(xScreenWidth,yScreenWidth);
@@ -35,24 +37,19 @@ void managerLoop() {
  }
 
 //Code Area
- 
+
 void runCode() {
-  
+  String SenComb = (Sen1 + " " + Sen2 + " " + Sen3 + " " + Sen4);
+  StringInConsole(SenComb);
 }
 
 //Functions Area
 void intInConsole(int intText) {
   println(intText);
 }
-  
+
 void StringInConsole(String stringText) {
   println(stringText);
-}  
-
-void floatInConsole(float floatText) {
-  println(floatText);
 }
 
-void powerMethod(float value) {
-  holder = value * value;
-}
+  

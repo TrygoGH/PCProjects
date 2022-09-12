@@ -2,9 +2,11 @@
 //Baseplate stuff
 //init var area
 int xScreenWidth = 1280; int yScreenWidth = 720;
-int xCenter = xScreenWidth / 2; int yCenter = yScreenWidth / 2; int allignL = 0; int allignR = 1280; int allignT = 0; int allignB = 720;
+int xCenter = 640; int yCenter = 320; int allignL = 0; int allignR = 1280; int allignT = 0; int allignB = 720;
 int i = 0; int i2 = 0; float holder = 0;
 int GMtick = 0;
+
+float length = 420.69; String sen1 = "ur so tall aha ha";
 
 void settings() {
   size(xScreenWidth,yScreenWidth);
@@ -35,9 +37,9 @@ void managerLoop() {
  }
 
 //Code Area
- 
+
 void runCode() {
-  
+  println (length + " cm " + sen1);
 }
 
 //Functions Area
