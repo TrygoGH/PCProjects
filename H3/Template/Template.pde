@@ -41,17 +41,13 @@ void runCode() {
 }
 
 //Functions Area
-void intInConsole(int intText) {
-  println(intText);
+void numInCon(float numText) {
+  println(numText);
 }
   
 void StringInConsole(String stringText) {
   println(stringText);
 }  
-
-void floatInConsole(float floatText) {
-  println(floatText);
-}
 
 void powerMethod(float value) {
   holder = value * value;
