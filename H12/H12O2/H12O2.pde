@@ -27,6 +27,7 @@ int xScreenWidth = 1280; int yScreenWidth = 720;
 int xCenter = xScreenWidth / 2; int yCenter = yScreenWidth / 2; int allignL = 0; int allignR = 1280; int allignT = 0; int allignB = 720;
 int btSize = 100; 
 int GMtick = 0;
+float counter = 0;
 
 //array area
 int[] iList1 = new int[26];
@@ -81,6 +82,12 @@ void runCode() {
   
 }
 
+void keyPressed(){
+  if(keyCode == 32){
+    counter++;
+   println(counter);
+  }
+}
 
 
 
