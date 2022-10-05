@@ -18,6 +18,7 @@
 //Baseplate stuff
 import controlP5.*;
 import processing.sound.*;
+entity e;
 ControlP5 cp5;
 SoundFile sFile;
 PFont font;
@@ -43,6 +44,8 @@ int[] entityIDlist = new int[200];
 float[] fList1 = new float[26];
 String[] sList1 = new String[26];
 ArrayList<keyPress> keyPresses = new ArrayList<keyPress>();
+ArrayList<entity> entities = new ArrayList<entity>();
+
 
 
 
@@ -81,6 +84,7 @@ void setup() {
   stroke(255);
   strokeWeight(5);
   fill(255, 255, 255);
+  entities.add(new entity((int)random(10), 1 , 20));
 
 
   //text
@@ -115,9 +119,10 @@ void managerTick() {
 }
 
 void ecsLoop() {
-   for(int i = 0; i < entityIDlist.length; i++){
-   println(frameRate);
+   for(int i = 0; i < entities.size(); i++){
+   print(entities.get(i).eHp + " ");
    }
+   println(" " + frameRate);
 }
 
 void drawLoop() {
@@ -134,7 +139,8 @@ void drawLoop() {
 }
 
 void keyPressed() {
-  keyPresses.add(new keyPress(keyCode));
+  //keyPresses.add(new keyPress(keyCode));
+  entities.add(new entity((int)random(10), 01234567 , 20));
 }
 
 //CODE AREA
@@ -160,7 +166,15 @@ void button2() {
 
 //Class
 
-
+class entity {
+  int eId;
+  float eHp;
+  int eLvl;
+  entity(int id, float hp, int lvl) {
+    if(id != 01234567){eId = id;} if(hp != 01234567){eHp = hp;} if(lvl != 01234567){eLvl = lvl;}
+   
+  }
+}
 
 
 class keyPress {
