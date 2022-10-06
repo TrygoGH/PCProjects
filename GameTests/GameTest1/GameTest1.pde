@@ -30,21 +30,27 @@ Button button2;
 Textfield textfield1;
 
 //init var area
-int xScreenWidth = 0; int yScreenWidth = 0; //user fullscreen
-// int xScreenWidth = 1920; int yScreenWidth = 1080; //1080p
-//int xScreenWidth = 1280; int yScreenWidth = 720; //720p
-int xCenter; int yCenter;
-int allignL; int allignR; int allignT; int allignB;
+int xScreenWidth = 0, yScreenWidth = 0; //user fullscreen
+// int xScreenWidth = 1920, yScreenWidth = 1080; //1080p
+//int xScreenWidth = 1280, yScreenWidth = 720; //720p
+int xCenter, yCenter;
+int allignL, allignR, allignT, allignB;
 int btSize = 100;
 int GMtick = 0;
-float nowTime = 0; float oldTime = 0; float delta = 0;
+float nowTime = 0, oldTime = 0, delta = 0, frameDelta = 0, targetFPS = 60; 
+int keyCount = 0;
+float cameraX, cameraY;
+int gameState = 0, loading = 1; 
+float loadedItems = 0, totalLoadItems = 7;
 
 //array area
 int[] entityIDlist = new int[200];
 float[] fList1 = new float[26];
 String[] sList1 = new String[26];
+String[] uInput = new String[222];
 ArrayList<keyPress> keyPresses = new ArrayList<keyPress>();
 ArrayList<entity> entities = new ArrayList<entity>();
+
 
 
 
@@ -62,8 +68,13 @@ void settings() {
 
 //init setup
 void setup() {
+  xScreenWidth = width; yScreenWidth = height;
   xCenter = xScreenWidth / 2; yCenter = yScreenWidth / 2;
   allignL = 0; allignR = xScreenWidth; allignT = 0; allignB = yScreenWidth;
+  
+  for(int i = 0; i < 222; i++){
+   uInput[i] = "0";
+  }
   //import vars
   cp5 = new ControlP5(this);
   //buttons
@@ -76,24 +87,23 @@ void setup() {
   //B A S E  S E T T I N G S//
 
   //function settings
-  rectMode(CENTER);
+  rectMode(CORNER);
 
   //canvas settings
-  frameRate(60);
+  frameRate(targetFPS);
   background(0, 0, 0);
   stroke(255);
   strokeWeight(5);
   fill(255, 255, 255);
-  entities.add(new entity((int)random(10), 1 , 20));
+  colorMode(RGB,255,255,255,1);
+  thread("initLoad");
+    
+
 
 
   //text
-  font = createFont("Calibri-48", 48);
-  textFont(font);
-  textAlign(CENTER, CENTER);
-
+  
   //images
-  img = loadImage("Images/Discord.png");
 
   //sounds
   //sFile = new SoundFile(this, "Sounds/BenBeat.mp3");
@@ -102,11 +112,21 @@ void setup() {
   //sFile.play();
 }
 
-//Main loop area (no loop for 1 time processes)
+//Main loop area
 void draw() {
-  managerLoop();
-  drawLoop();
-  ecsLoop();
+  if(loading == 0){
+    managerLoop();
+    if(gameState == 1){
+      drawLoop();
+      ecsLoop();
+      managerEnd();
+    }
+  }else if(loading == 1){
+       callLoadBar();
+  }
+  print(loading);
+  println(entities.size(), int(frameRate));
+  
 }
 
 void managerLoop() {
@@ -114,19 +134,29 @@ void managerLoop() {
   timeProcess();
 }
 
+void managerEnd() {
+  //keyCount = 0;
+}
+
 void managerTick() {
   GMtick++;
 }
 
 void ecsLoop() {
-   for(int i = 0; i < entities.size(); i++){
-   print(entities.get(i).eHp + " ");
-   }
-   println(" " + frameRate);
+  for (int i = 0; i < entities.size(); i++) {
+    e = entities.get(i);
+    e.display();
+    e.manager();
+    e.camera();
+    e.move();
+   
+        
+  }
+  //println(" " + frameRate);
 }
 
 void drawLoop() {
-  //background(0);
+  background(0);
   //text(keyCode, xCenter, 300);
   //text(key, xCenter, 150);
   //if (keyPresses.size() > 0) {
@@ -138,10 +168,6 @@ void drawLoop() {
   // }
 }
 
-void keyPressed() {
-  //keyPresses.add(new keyPress(keyCode));
-  entities.add(new entity((int)random(10), 01234567 , 20));
-}
 
 //CODE AREA
 
@@ -166,16 +192,6 @@ void button2() {
 
 //Class
 
-class entity {
-  int eId;
-  float eHp;
-  int eLvl;
-  entity(int id, float hp, int lvl) {
-    if(id != 01234567){eId = id;} if(hp != 01234567){eHp = hp;} if(lvl != 01234567){eLvl = lvl;}
-   
-  }
-}
-
 
 class keyPress {
   int keyC;
@@ -185,54 +201,30 @@ class keyPress {
 }
 
 //Functions Area
-void numInCon(float numText) {
-  println(numText);
-}
-
-void StringInConsole(String stringText) {
-  println(stringText);
-}
-
-float powerMethod(float value) {
-  float holder = value * value;
-  return holder;
-}
-
-float avg (float num1, float num2) {
-  float holder = (num1 + num2) / 2;
-  return holder;
-}
-
-void rekt2(float num1, float num2, float num3, float num4) {
-  line(num1 - (num3 / 2), num2 + (num4 / 2), num1 + (num3 / 2), num2 + (num4 / 2));
-  line(num1 - (num3 / 2), num2 + (num4 / 2), num1 - (num3 / 2), num2 - (num4 / 2));
-  line(num1 - (num3 / 2), num2 - (num4 / 2), num1 + (num3 / 2), num2 - (num4 / 2));
-  line(num1 + (num3 / 2), num2 - (num4 / 2), num1 + (num3 / 2), num2 + (num4 / 2));
-}
-
-void rekt(float num1, float num2, float num3, float a) {
-  rect(0, 0, 10, 10);
-}
-
-float combi (float num1, float num2, float num3, float num4) {
-  float holder = (num1 + num2 + num3 + num4);
-  return holder;
-}
 
 void soundSet(float... sets) {
-  if (sets.length >= 1) {
-    sFile.rate(sets[0]);
-  }
-  if (sets.length >= 2) {
-    sFile.amp(sets[1]/100);
-  }
-  if (sets.length >= 3) {
-    sFile.cue(sets[2]);
-  }
+  if(sets.length >= 1){sFile.rate(sets[0]);}
+  if(sets.length >= 2){sFile.amp(sets[1]/100);}
+  if(sets.length >= 3){sFile.cue(sets[2]);}
 }
 
 void timeProcess() {
   nowTime = millis() / 1;
   delta = (millis() - oldTime) /1000;
+  frameDelta = 60/(1/delta);
   oldTime = millis() / 1;
+}
+
+void createEntity(){
+entities.add(new entity(
+    "01020304050607",
+    "100",
+    str(2),
+    str(10),
+    str(3),
+    str(random(0,1000)),
+    str(random(0,1000)),
+    str(2),
+    str(25)
+    ));
 }
