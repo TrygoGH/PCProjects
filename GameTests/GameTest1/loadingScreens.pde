@@ -16,6 +16,7 @@ void initLoad(){
    //text
    if(0 == 0){
    font = loadFont("Calibri-Light-48.vlw");
+   sFile = new SoundFile(this, "Sounds/Shine.mp3");
   textFont(font);
   textAlign(CENTER, CENTER);
   loadedItems++; 

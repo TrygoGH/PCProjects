@@ -40,8 +40,8 @@ int GMtick = 0;
 float nowTime = 0, oldTime = 0, delta = 0, frameDelta = 0, targetFPS = 60; 
 int keyCount = 0;
 float cameraX, cameraY;
-int gameState = 0, loading = 1; 
-float loadedItems = 0, totalLoadItems = 7;
+int gameState = 0, loading = 1, testLoad = 0; 
+float loadedItems = 0, totalLoadItems = 7; 
 
 //array area
 int[] entityIDlist = new int[200];
@@ -96,7 +96,6 @@ void setup() {
   strokeWeight(5);
   fill(255, 255, 255);
   colorMode(RGB,255,255,255,1);
-  thread("initLoad");
     
 
 
@@ -123,6 +122,7 @@ void draw() {
     }
   }else if(loading == 1){
        callLoadBar();
+       if(testLoad == 0){textSize(24); textAlign(CENTER, CENTER); fill(255); text("press enter to start loading", xCenter, ((yScreenWidth/2)+100)-6);}
   }
   print(loading);
   println(entities.size(), int(frameRate));

@@ -42,7 +42,8 @@ class entity {
       if(eFunctions.charAt(0) == '1'){
       if((eX-cameraX)+xCenter+eSize >= 0 && (eX-cameraX)+xCenter-eSize <= xScreenWidth && (eY-cameraY)+yCenter+eSize >= 0 && (eY-cameraY)+yCenter-eSize <= yScreenWidth){ //(eX-cameraX)+xCenter+eSize >= 0 && (eX-cameraX)+xCenter-eSize <= xScreenWidth && (eY-cameraY)+yCenter+eSize >= 0 && (eY-cameraY)+yCenter-eSize <= yScreenWidth  
        
-       fill(255,255,255,0.5);  
+       fill(255,255,255,0.5);
+       strokeWeight(0);
        float[] a = screenPos(eX,eY,cameraX,cameraY); if(eType == 1){rectMode(CENTER); rect(a[0], a[1], eSize, eSize);}else if (eType == 2){ellipse(a[0], a[1], eSize, eSize);}
       }
      }
