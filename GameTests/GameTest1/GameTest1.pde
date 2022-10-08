@@ -30,9 +30,9 @@ Button button2;
 Textfield textfield1;
 
 //init var area
-int xScreenWidth = 0, yScreenWidth = 0; //user fullscreen
+//int xScreenWidth = 0, yScreenWidth = 0; //user fullscreen
 // int xScreenWidth = 1920, yScreenWidth = 1080; //1080p
-//int xScreenWidth = 1280, yScreenWidth = 720; //720p
+int xScreenWidth = 1280, yScreenWidth = 720; //720p
 int xCenter, yCenter;
 int allignL, allignR, allignT, allignB;
 int btSize = 100;
@@ -42,12 +42,14 @@ int keyCount = 0;
 float cameraX, cameraY;
 int gameState = 0, loading = 1, testLoad = 0; 
 float loadedItems = 0, totalLoadItems = 7; 
+String eF = "";
 
 //array area
 int[] entityIDlist = new int[200];
 float[] fList1 = new float[26];
 String[] sList1 = new String[26];
 String[] uInput = new String[222];
+boolean entityCheck[] = new boolean[2];
 ArrayList<keyPress> keyPresses = new ArrayList<keyPress>();
 ArrayList<entity> entities = new ArrayList<entity>();
 
@@ -96,6 +98,7 @@ void setup() {
   strokeWeight(5);
   fill(255, 255, 255);
   colorMode(RGB,255,255,255,1);
+  noCursor();
     
 
 
@@ -113,6 +116,7 @@ void setup() {
 
 //Main loop area
 void draw() {
+  //println((Object[])uInput);
   if(loading == 0){
     managerLoop();
     if(gameState == 1){
@@ -125,7 +129,7 @@ void draw() {
        if(testLoad == 0){textSize(24); textAlign(CENTER, CENTER); fill(255); text("press enter to start loading", xCenter, ((yScreenWidth/2)+100)-6);}
   }
   print(loading);
-  println(entities.size(), int(frameRate));
+  //println(entities.size(), int(frameRate));
   
 }
 
@@ -143,12 +147,14 @@ void managerTick() {
 }
 
 void ecsLoop() {
+
   for (int i = 0; i < entities.size(); i++) {
     e = entities.get(i);
-    e.display();
-    e.manager();
-    e.camera();
-    e.move();
+    eF = e.eFunctions;
+    arrayCopy(eFLength(eF, 1),entityCheck); e.display(entityCheck[0],entityCheck[1]);
+    arrayCopy(eFLength(eF, 2),entityCheck); e.manager(entityCheck[0],entityCheck[1]);
+    arrayCopy(eFLength(eF, 3),entityCheck); e.move(entityCheck[0],entityCheck[1]);
+    arrayCopy(eFLength(eF, 4),entityCheck); e.camera(entityCheck[0],entityCheck[1]);
    
         
   }

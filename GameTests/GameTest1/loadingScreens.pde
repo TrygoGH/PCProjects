@@ -8,7 +8,7 @@ void initLoad(){
     
    //sounds
    if(0 == 0){
-   sFile = new SoundFile(this, "Sounds/BenBeat.mp3");
+   //sFile = new SoundFile(this, "Sounds/BenBeat.mp3");
    sFile = new SoundFile(this, "Sounds/Pop.wav");
    loadedItems++; 
    }
@@ -16,7 +16,7 @@ void initLoad(){
    //text
    if(0 == 0){
    font = loadFont("Calibri-Light-48.vlw");
-   sFile = new SoundFile(this, "Sounds/Shine.mp3");
+   //sFile = new SoundFile(this, "Sounds/Shine.mp3");
   textFont(font);
   textAlign(CENTER, CENTER);
   loadedItems++; 
@@ -31,17 +31,6 @@ void initLoad(){
   }
   
   //ECS
-  if(0 == 0){
-    entities.add(new entity(
-    "010405",
-    "0001",
-    str(2),
-    str(0),
-    str(0)
-    ));
-    loadedItems++; 
-  }
-  
   if(0 == 0){
   entities.add(new entity(
     "0102030405060708",
@@ -66,6 +55,17 @@ void initLoad(){
     ));
     loadedItems++; 
     }
+    
+      if(0 == 0){
+    entities.add(new entity(
+    "010405",
+    "0001",
+    str(2),
+    str(0),
+    str(0)
+    ));
+    loadedItems++; 
+  }
 
    //done
    if(loadedItems == 7){
