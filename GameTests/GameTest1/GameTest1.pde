@@ -37,7 +37,7 @@ int xCenter, yCenter;
 int allignL, allignR, allignT, allignB;
 int btSize = 100;
 int GMtick = 0, entityI = 0; 
-float nowTime = 0, oldTime = 0, delta = 0, deltaFrame = 0, targetFPS = 300, oldFrame = 0, nowFrame = 0, storedFrames = 0, framesPassed = 0;
+float nowTime = 0, oldTime = 0, delta = 0, deltaFrame = 0, targetFPS = 60, oldFrame = 0, nowFrame = 0, storedFrames = 0, framesPassed = 0;
 int keyCount = 0;
 float cameraX, cameraY, cameraZoom = 1.0;
 int gameState = 0, loading = 1, testLoad = 0; 
@@ -118,7 +118,8 @@ void setup() {
   //sFile.play();
   */
   rectMode(CORNER); 
-  frameRate(targetFPS);
+  frameRate(300);
+  //COMMENT
   background(0, 0, 0);
   stroke(255);
   strokeWeight(5);
@@ -210,14 +211,14 @@ void soundSet(float... sets) {
 }
 
 void timeProcess() {
-  nowTime = millis() / 1;
-  delta = (millis() - oldTime) /1000;
-  deltaFrame = 60*delta; //frameDelta = 1; 
-  oldTime = millis() / 1;
-  nowFrame = nowFrame + targetFPS * delta;
-  storedFrames = storedFrames + targetFPS * delta;
-  framesPassed = nowFrame - oldFrame; println(storedFrames);
-  oldFrame = oldFrame + targetFPS * delta;
+  nowTime = millis();
+  delta = (nowTime - oldTime) / 1000;
+  deltaFrame = targetFPS*delta; //frameDelta = 1; 
+  oldTime = nowTime;
+  nowFrame += targetFPS * delta;
+  storedFrames += targetFPS * delta;
+  framesPassed = nowFrame - oldFrame; println(deltaFrame);
+  oldFrame += targetFPS * delta;
 }
 
 void createEntity(){
