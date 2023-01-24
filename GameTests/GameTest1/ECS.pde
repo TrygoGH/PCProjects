@@ -201,7 +201,7 @@ class entity {
         if(eFunc){
          e = entities.get(int(manager[0]));
          eX = cameraX; eY = cameraY;
-         eCalc1 = lerp(eX,e.eX,constrain(0.20*deltaFrame,0.0,1.0)); eCalc2 = lerp(eY,e.eY,constrain(0.20*deltaFrame,0.0,1.0));
+         eCalc1 = lerp(eX, e.eX, pow(1, deltaFrame) ); eCalc2 = lerp(eY, e.eY, pow(1, deltaFrame) );
          cameraX = eCalc1; cameraY = eCalc2;
          //if(eCalc1 > 0 && cameraX > e.eX){cameraX = e.eX;} if(eCalc2 > 0 && cameraY > e.eY){cameraY = e.eY;}
          //if(eCalc1 < 0 && cameraX < e.eX){cameraX = e.eX;} if(eCalc2 < 0 && cameraY < e.eY){cameraY = e.eY;}
@@ -224,9 +224,8 @@ class entity {
     if(eFlen){
         if(eFunc){
           eXvel = eXvel + eTempXvel; eYvel = eYvel + eTempYvel; //eXvel = eTempXvel; eYvel = eTempYvel;
-          eCalc1 = eXvel * eFriction; eCalc2 = eYvel * eFriction;
-          eXvel = eXvel - eCalc1; eYvel = eYvel - eCalc2;
-          eX = eX + (eXvel * deltaFrame); eY = eY + (eYvel * deltaFrame);
+          eXvel *= pow(eFriction, deltaFrame); eYvel *= pow(eFriction, deltaFrame);
+          eX += eXvel * delta; eY += eYvel * delta;
           eTempXvel = 0; eTempYvel = 0;
       }  
     }
